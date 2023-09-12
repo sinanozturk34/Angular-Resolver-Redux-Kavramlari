@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
 import { CounterStateService } from 'src/app/services/counter-state.service';
 
 @Component({
@@ -9,12 +10,19 @@ import { CounterStateService } from 'src/app/services/counter-state.service';
 })
 export class CounterTestBComponent implements OnInit,OnDestroy {
   counter:number = 0;
-
+  counter2:number =0;
   counterSubs:Subscription | undefined;
-  constructor(private counterStateService:CounterStateService){
+  count$:Observable<number>;
+
+  constructor(private counterStateService:CounterStateService, private store: Store<{ count: number }>){
     // this.counterStateService.getCounter().subscribe(value => {
     //   this.counter = value;
     //  })
+    this.count$ = store.select('count');
+    this.count$.subscribe(counter => {
+      this.counter2 = counter;
+    })
+
 
   }
   ngOnDestroy(): void {
