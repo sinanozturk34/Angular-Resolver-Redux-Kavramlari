@@ -35,4 +35,4 @@ export class CounterTestBComponent implements OnInit,OnDestroy {
    })
   }
 
-}
+}//---------
